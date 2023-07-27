@@ -4,6 +4,7 @@ import { getUserData } from './utils.js';
 import { showHome } from './views/home.js';
 import { showRegister } from './views/registration.js';
 import { logout } from './api/auth.js';
+import { showLogin } from './views/login.js';
 
 const main = document.querySelector('main');
 
@@ -53,5 +54,6 @@ page(updateNav);
 
 page('/', showHome);
 page('/register', showRegister);
+page('/login', showLogin)
 
 page.start();
