@@ -3,8 +3,11 @@ import { render } from "../../node_modules/lit-html/lit-html.js";
 import { getUserData } from './utils.js';
 import { showHome } from './views/home.js';
 import { showRegister } from './views/registration.js';
+import { logout } from './api/auth.js';
 
 const main = document.querySelector('main');
+
+document.getElementById('navLogout').addEventListener('click', onLogout);
 
 function session(ctx, next) {
     const user = getUserData();
@@ -36,6 +39,12 @@ function updateNav(ctx, next) {
     }
 
     next()
+}
+
+async function onLogout() {
+    await logout();
+
+    page.redirect('/dashboard')
 }
 
 page(decorateContext);
