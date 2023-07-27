@@ -1,4 +1,4 @@
-import { html } from "../../node_modules/lit-html/lit-html.js";
+import { html, nothing } from "../../node_modules/lit-html/lit-html.js";
 import { deleteAlbumById, getAlbumById } from "../api/data.js";
 
 
@@ -19,15 +19,17 @@ const template = (album, user, onDelete) => html`
             <p><strong>Sales:</strong><span id="details-sales">${album.sales}</span></p>
           </div>
           <div id="likes">Likes: <span id="likes-count">0</span></div>
+          
           ${album._ownerId === user?._id 
           ? html`
-            <div id="action-buttons">
-            <a href="" id="like-btn">Like</a>
+          <div id="action-buttons">
             <a href="/edit/${album._id}" id="edit-btn">Edit</a>
             <a href="" id="delete-btn" @click=${onDelete}>Delete</a>
-            </div>
+            </div>`
+            : nothing}
+            
+          </div>
             </section>`
-            : html``}`
 
 export async function showDetails(ctx) {
     const albumId = ctx.params.id;

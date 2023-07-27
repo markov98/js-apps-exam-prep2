@@ -8,6 +8,7 @@ import { showLogin } from './views/login.js';
 import { showDashboard } from './views/dashboard.js';
 import { showAdd } from './views/add.js';
 import { showDetails } from './views/details.js';
+import { showEdit } from './views/edit.js';
 
 const main = document.querySelector('main');
 
@@ -60,6 +61,7 @@ page('/register', showRegister);
 page('/login', showLogin);
 page('/dashboard', showDashboard);
 page('/add', showAdd);
-page('/details/:id', showDetails)
+page('/details/:id', showDetails);
+page('/edit/:id', showEdit);
 
 page.start();
