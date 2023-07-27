@@ -11,7 +11,7 @@ const cardTemplate = (album) => html`
             <strong>Album name: </strong><span class="album">${album.album}</span>
             </p>
             <p><strong>Sales:</strong><span class="sales">${album.sales}</span></p>
-            <a class="details-btn" href="/datails/${album._id}">Details</a>
+            <a class="details-btn" href="/details/${album._id}">Details</a>
         </li>`
 
 const template = (albums) => html`
