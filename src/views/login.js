@@ -24,17 +24,16 @@ export function showLogin(ctx) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const email = formData.get('email');
-    const pass = formData.get('password');
+    const data = Object.fromEntries(formData.entries());
 
-    if ([email, pass].some(el => el === '')) {
+    if (Object.values(data).some(val => !val)) {
       alert('You have empty fields');
       return null;
     }
 
 
     try {
-      await login(email, pass);
+      await login(data.email, data.password);
 
       ctx.page.redirect('/dashboard')
     } catch (err) {

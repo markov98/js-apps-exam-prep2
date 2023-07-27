@@ -23,20 +23,18 @@ export function showRegister(ctx) {
         e.preventDefault();
     
         const formData = new FormData(e.target);
-        const email = formData.get('email');
-        const pass = formData.get('password');
-        const rePass = formData.get('re-password');
+        const data = Object.fromEntries(formData.entries());
     
-        if ([email, pass, rePass].some(el => el === '')) {
+        if (Object.values(data).some(val => !val)) {
             alert('You have empty fields');
             return null;
-        } else if (pass !== rePass) {
+        } else if (data.password !== data['re-password']) {
           alert('Passwords do not match');
           return null;
         }
     
         try {
-          await register(email, pass);
+          await register(data.email, data.password);
     
           ctx.page.redirect('/dashboard')
         } catch (err) {
