@@ -18,32 +18,24 @@
 
       <nav>
         <div>
-          <a href="#">Dashboard</a>
+          <a href="/dashboard">Dashboard</a>
         </div>
 
         <!-- Logged-in users -->
         <div class="user">
-          <a href="#">Add Album</a>
-          <a href="#">Logout</a>
+          <a href="/add">Add Album</a>
+          <a href="#" id="navLogout">Logout</a>
         </div>
 
         <!-- Guest users -->
         <div class="guest">
-          <a href="#">Login</a>
-          <a href="" id="navLogout">Register</a>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
         </div>
       </nav>
     </header>
 
     <main>
-      <!-- Home page -->
-      <section id="home">
-        <img src="./images/landing.png" alt="home" />
-
-        <h2 id="landing-text"><span>Add your favourite albums</span> <strong>||</strong> <span>Discover new ones right
-            here!</span></h2>
-      </section>
-
       <!-- Dashboard page -->
       <section id="dashboard">
         <h2>Albums</h2>
@@ -88,19 +80,6 @@
         <h2>There are no albums added yet.</h2>
       </section>
 
-      <!-- Register Page (Only for Guest users) -->
-      <section id="register">
-        <div class="form">
-          <h2>Register</h2>
-          <form class="login-form">
-            <input type="text" name="email" id="register-email" placeholder="email" />
-            <input type="password" name="password" id="register-password" placeholder="password" />
-            <input type="password" name="re-password" id="repeat-password" placeholder="repeat password" />
-            <button type="submit">register</button>
-            <p class="message">Already registered? <a href="#">Login</a></p>
-          </form>
-        </div>
-      </section>
 
       <!-- Login Page (Only for Guest users) -->
       <section id="login">
