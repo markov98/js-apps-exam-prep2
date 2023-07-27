@@ -1,9 +1,18 @@
 import page from '../node_modules/page/page.mjs';
 import { render } from "../../node_modules/lit-html/lit-html.js";
-import { showHome } from './views.js';
+import { getUserData } from './utils.js';
+import { showHome } from './views/home.js';
 
 const main = document.querySelector('main');
 
+function session(ctx, next) {
+    const user = getUserData();
+    if (user) {
+        ctx.user = user;
+    }
+
+    next();
+}
 
 function decorateContext(ctx, next) {
     ctx.render = function (content) {
@@ -29,6 +38,7 @@ function updateNav(ctx, next) {
 }
 
 page(decorateContext);
+page(session);
 page(updateNav);
 
 page('/', showHome);
