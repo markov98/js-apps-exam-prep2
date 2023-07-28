@@ -1,8 +1,8 @@
 import { html, nothing } from "../../node_modules/lit-html/lit-html.js";
-import { deleteAlbumById, getAlbumById } from "../api/data.js";
+import { addLike, deleteAlbumById, getAlbumById, getLikesByAlbumId } from "../api/data.js";
 
 
-const template = (album, user, onDelete) => html`
+const template = (album, user, likes, onDelete, onLike, isLiked) => html`
       <section id="details">
         <div id="details-wrapper">
           <p id="details-title">Album Details</p>
@@ -18,16 +18,16 @@ const template = (album, user, onDelete) => html`
             <p><strong>Label:</strong><span id="details-label">${album.label}</span></p>
             <p><strong>Sales:</strong><span id="details-sales">${album.sales}</span></p>
           </div>
-          <div id="likes">Likes: <span id="likes-count">0</span></div>
-          
-          ${album._ownerId === user?._id 
-          ? html`
+          <div id="likes">Likes: <span id="likes-count">${likes}</span></div>
           <div id="action-buttons">
+        ${user && album._ownerId === user._id
+        ? html`
             <a href="/edit/${album._id}" id="edit-btn">Edit</a>
-            <a href="" id="delete-btn" @click=${onDelete}>Delete</a>
-            </div>`
+            <a href="" id="delete-btn" @click=${onDelete}>Delete</a>`
+        : !isLiked
+            ? html`<a href="" id="like-btn" @click=${onLike}>Like</a>`
             : nothing}
-            
+            </div>
           </div>
             </section>`
 
@@ -35,8 +35,19 @@ export async function showDetails(ctx) {
     const albumId = ctx.params.id;
 
     const album = await getAlbumById(albumId);
+    const likes = await getLikesByAlbumId(albumId);
+    const isLiked = await getLikesByAlbumId(albumId, ctx.user?._id);
 
-    ctx.render(template(album, ctx.user, onDelete));
+    ctx.render(template(album, ctx.user, likes, onDelete, onLike, isLiked));
+
+    async function onLike() {
+        try {
+            await addLike({albumId});
+            ctx.render(template(album, ctx.user, likes, onDelete, onLike, isLiked));
+        } catch (e) {
+            alert(e.massage)
+        }
+    }
 
     async function onDelete(event) {
       event.preventDefault();

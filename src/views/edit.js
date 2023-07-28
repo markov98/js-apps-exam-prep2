@@ -20,7 +20,7 @@ const template = (data, onSubmit) => html`
 
 export async function showEdit(ctx) {
     const albumId = ctx.params.id;
-    const data = await getAlbumById(albumId)
+    const data = await getAlbumById(albumId);
 
     ctx.render(template(data, onSubmit));
 
