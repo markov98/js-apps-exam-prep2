@@ -1,5 +1,5 @@
 import { html, nothing } from "../../node_modules/lit-html/lit-html.js";
-import { addLike, deleteAlbumById, getAlbumById, getLikesByAlbumId } from "../api/data.js";
+import { addLike, deleteAlbumById, getAlbumById, getLikesByAlbumId, getLikesByUser } from "../api/data.js";
 
 
 const template = (album, user, likes, onDelete, onLike, isLiked) => html`
@@ -19,15 +19,18 @@ const template = (album, user, likes, onDelete, onLike, isLiked) => html`
             <p><strong>Sales:</strong><span id="details-sales">${album.sales}</span></p>
           </div>
           <div id="likes">Likes: <span id="likes-count">${likes}</span></div>
-          <div id="action-buttons">
         ${user && album._ownerId === user._id
         ? html`
+        <div id="action-buttons">
             <a href="/edit/${album._id}" id="edit-btn">Edit</a>
-            <a href="" id="delete-btn" @click=${onDelete}>Delete</a>`
+            <a href="" id="delete-btn" @click=${onDelete}>Delete</a>
+            </div>`
         : !isLiked
-            ? html`<a href="" id="like-btn" @click=${onLike}>Like</a>`
+            ? html`
+            <div id="action-buttons">
+                <a href="" id="like-btn" @click=${onLike}>Like</a>
+                </div>`
             : nothing}
-            </div>
           </div>
             </section>`
 
@@ -36,7 +39,7 @@ export async function showDetails(ctx) {
 
     const album = await getAlbumById(albumId);
     const likes = await getLikesByAlbumId(albumId);
-    const isLiked = await getLikesByAlbumId(albumId, ctx.user?._id);
+    const isLiked = await getLikesByUser(albumId, ctx.user?._id);
 
     ctx.render(template(album, ctx.user, likes, onDelete, onLike, isLiked));
 
